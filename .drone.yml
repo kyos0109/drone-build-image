@@ -1,0 +1,13 @@
+pipeline:
+  deploy:
+    image: plugins/docker
+    dockerfile: Dockerfile
+    auto_tag: true
+    auto_tag_suffix: happy
+    repo: kyos0109/php-fpm-opcache
+    secrets: [ docker_username, docker_password ]
+    when:
+      branch:
+        exclude: develop
+        include: [ master, release/*, hostfix/* ]
+      events: [ tag, push, pull_request ]
