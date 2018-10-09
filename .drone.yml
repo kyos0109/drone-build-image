@@ -11,3 +11,16 @@ pipeline:
         exclude: develop
         include: [ master, release/*, hostfix/* ]
       events: [ tag, push, pull_request ]
+  notify:
+    image: kyos0109/drone-line-notify:latest
+    secrets: [ token_secret ]
+    message: |
+        Status: {{.BuildStatus}}
+        Repo: {{.RepoName }}
+        Branch: {{.RepoBranch}}
+        Build Num: {{.BuildNum}}
+        Commit ID: {{.CommitID}}
+        Author: {{.Author}}
+        Commit Msg: {{.CommitMsg}}
+    when:
+      status: [ success, failure ]
