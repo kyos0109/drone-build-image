@@ -9,7 +9,7 @@ pipeline:
     when:
       branch:
         exclude: develop
-        include: [ master, release/*, hostfix/* ]
+        include: [ master, release/*, hostfix/*, refs/tags/* ]
       events: [ tag, push, pull_request ]
   notify:
     image: kyos0109/drone-line-notify:latest
@@ -23,4 +23,7 @@ pipeline:
         Author: {{.Author}}
         Commit Msg: {{.CommitMsg}}
     when:
-      status: [ success, failure ]
+      branch:
+        exclude: develop
+        include: [ master, release/*, hostfix/*, refs/tags/* ]
+      events: [ tag, push, pull_request ]
